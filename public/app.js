@@ -26,14 +26,14 @@ const appVersionEl = document.getElementById('app-version');
 const modeConfig = {
   domain: {
     label: 'Domain',
-    placeholder: 'voltacontainerline.com',
+    placeholder: 'contoso.com',
     description:
       'Resolve a domain, expand sibling domains when available, and see the tenant behind it.',
     exampleCaption: 'Tap to run a domain lookup',
     examples: [
-      'voltacontainerline.com',
+      'contoso.com',
       'microsoft.com',
-      'contoso.com'
+      'adatum.com'
     ]
   },
   organization: {
