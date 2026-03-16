@@ -26,6 +26,34 @@ npm run start
 
 Open `http://localhost:3000`.
 
+## Versioning and changelog
+
+This repo now uses a simple semantic-version release workflow backed by `package.json` and `CHANGELOG.md`.
+
+For every shipped feature, run:
+
+```bash
+npm run release -- --type patch --message "Describe the feature"
+```
+
+Use `patch` for fixes, `minor` for new features, and `major` for breaking changes.
+
+Examples:
+
+```bash
+npm run release -- --type patch --message "Fixed upstream timeout handling"
+npm run release -- --type minor --message "Added organization report export"
+npm run release -- --type minor --message "Added footer version display" --message "Added metadata API endpoint"
+```
+
+What it updates:
+
+- `package.json`
+- `package-lock.json`
+- `CHANGELOG.md`
+
+The UI footer version is read from `/api/meta`, which is sourced from `package.json`.
+
 ## Privacy mode (safe searches)
 
 This project supports local-only search mode:

@@ -1,6 +1,6 @@
 {
   "name": "m365-tenant-domain-finder",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Web tool to search domains grouped by Microsoft 365 tenant.",
   "type": "module",
   "main": "src/server.js",
@@ -8,7 +8,8 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "ingest": "node src/scripts/ingest-domains.js",
-    "import:csv": "node src/scripts/import-csv.js"
+    "import:csv": "node src/scripts/import-csv.js",
+    "release": "node src/scripts/release.js"
   },
   "engines": {
     "node": ">=20"

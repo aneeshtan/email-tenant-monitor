@@ -4,6 +4,7 @@ const resultsBody = document.getElementById('results-body');
 const statusEl = document.getElementById('status');
 const statsPill = document.getElementById('stats-pill');
 const exportPdfButton = document.getElementById('export-pdf-button');
+const appVersionEl = document.getElementById('app-version');
 let privacyModeEnabled = true;
 
 const emptyReportState = {
@@ -310,10 +311,20 @@ exportPdfButton.addEventListener('click', exportPdfReport);
 
 (async function init() {
   try {
-    const [metrics, privacy] = await Promise.all([fetchJson('/api/stats'), fetchJson('/api/privacy')]);
+    const [metrics, privacy, meta] = await Promise.all([
+      fetchJson('/api/stats'),
+      fetchJson('/api/privacy'),
+      fetchJson('/api/meta')
+    ]);
     statsPill.textContent = `${metrics.total_domains} domains / ${metrics.total_tenants} tenants`;
     privacyModeEnabled = Boolean(privacy.privacy_mode);
+    if (appVersionEl) {
+      appVersionEl.textContent = `(v${meta.version || '?'})`;
+    }
   } catch (_error) {
     statsPill.textContent = 'Stats unavailable';
+    if (appVersionEl) {
+      appVersionEl.textContent = '(version unavailable)';
+    }
   }
 })();

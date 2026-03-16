@@ -180,6 +180,17 @@ td code {
   background: #fff9ee;
 }
 
+.site-footer {
+  padding: 0.25rem 0 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .form-row {
     flex-direction: column;

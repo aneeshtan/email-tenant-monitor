@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import packageJson from '../package.json' with { type: 'json' };
 import {
   createDb,
   findTenantByDomain,
@@ -41,6 +42,13 @@ app.get('/api/privacy', (_req, res) => {
     privacy_mode: privacyMode,
     live_microsoft_lookup_enabled: !privacyMode,
     upstream_enabled: !privacyMode && isUpstreamEnabled()
+  });
+});
+
+app.get('/api/meta', (_req, res) => {
+  res.json({
+    app_name: 'Tenant Domain Finder',
+    version: packageJson.version
   });
 });
 
