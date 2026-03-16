@@ -51,12 +51,12 @@ const modeConfig = {
   },
   tenant: {
     label: 'Tenant ID',
-    placeholder: '8c3dbb07-e9c4-43cc-8656-d8b75b0b8b0f',
+    placeholder: '11111111-2222-3333-4444-555555555555',
     description:
       'Inspect a known tenant directly and review all domains currently attached to it.',
     exampleCaption: 'Tap to search by tenant ID',
     examples: [
-      '8c3dbb07-e9c4-43cc-8656-d8b75b0b8b0f',
+      '11111111-2222-3333-4444-555555555555',
       '00000000-0000-0000-0000-000000000000'
     ]
   }

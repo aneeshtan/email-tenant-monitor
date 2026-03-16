@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The release workflow uses semantic versioning. Each shipped feature should bump the version and add an entry here.
 
+## [1.2.4] - 2026-03-16
+
+### Added
+- Removed the 8c3dbb07-e9c4-43cc-8656-d8b75b0b8b0f tenant ID from public examples.
+
 ## [1.2.3] - 2026-03-16
 
 ### Added
@@ -39,6 +44,7 @@ The release workflow uses semantic versioning. Each shipped feature should bump 
 
 ### Added
 - Initial import of the Microsoft 365 tenant domain finder application.
+
 
 
 

@@ -1,6 +1,6 @@
 {
   "name": "m365-tenant-domain-finder",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Web tool to search domains grouped by Microsoft 365 tenant.",
   "type": "module",
   "main": "src/server.js",
