@@ -3,86 +3,200 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>M365 Tenant Domain Finder</title>
+    <title>Tenant Domain Finder</title>
+    <meta
+      name="description"
+      content="Find the Microsoft 365 tenant behind a domain with a privacy-aware public lookup service."
+    />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <main class="layout">
-      <section class="hero">
-        <p class="eyebrow">Microsoft 365</p>
-        <h1>Tenant Domain Finder</h1>
-        <p class="subtitle">
-          Search domains that belong to the same Azure AD / Microsoft 365 tenant.
-        </p>
-      </section>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Tenant Domain Finder home">
+          <span class="brand-mark">T</span>
+          <span class="brand-copy">
+            <strong>Tenant Domain Finder</strong>
+            <span>Public Microsoft 365 tenant lookup</span>
+          </span>
+        </a>
+        <nav class="topnav" aria-label="Primary">
+          <a href="#how-it-works">How It Works</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#api">API</a>
+        </nav>
+      </header>
 
-      <section class="card">
-        <h2>Lookup by Domain or Tenant ID</h2>
-        <form id="lookup-form" class="form-row">
-          <input
-            id="lookup-input"
-            name="q"
-            type="text"
-            placeholder="contoso.com or tenant-guid"
-            autocomplete="off"
-            required
-          />
-          <button type="submit">Search</button>
-        </form>
-        <p class="hint">
-          In privacy mode, only local database results are returned and no external API calls are made.
-        </p>
-      </section>
-
-      <section class="card">
-        <h2>Search by Organization Name</h2>
-        <form id="org-form" class="form-row">
-          <input
-            id="org-input"
-            name="q"
-            type="text"
-            placeholder="Organization name"
-            autocomplete="off"
-            required
-          />
-          <button type="submit">Search</button>
-        </form>
-      </section>
-
-      <section class="card">
-        <div class="card-header">
-          <h2>Results</h2>
-          <div class="card-header-actions">
-            <button id="export-pdf-button" type="button" class="secondary-button" disabled>
-              Export PDF Report
-            </button>
-            <span id="stats-pill" class="pill">Loading stats...</span>
+      <main class="layout">
+        <section class="hero-panel">
+          <div class="hero-copy">
+            <p class="eyebrow">Standalone Public Service</p>
+            <h1>Find the Microsoft 365 tenant behind any domain.</h1>
+            <p class="subtitle">
+              Fast, privacy-aware, and transparent about what comes from local data, live Microsoft
+              resolution, and upstream tenant enrichment.
+            </p>
+            <div class="trust-row" aria-label="Trust signals">
+              <div class="trust-pill">Live Microsoft resolution</div>
+              <div class="trust-pill">Optional upstream enrichment</div>
+              <div class="trust-pill">No login required</div>
+            </div>
+            <div class="hero-meta">
+              <span id="stats-pill" class="metric-pill">Loading network stats...</span>
+              <span id="privacy-pill" class="meta-copy">Checking privacy mode...</span>
+            </div>
           </div>
-        </div>
-        <p id="status" class="status muted">Run a search to see results.</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Domain</th>
-                <th>Tenant ID</th>
-                <th>Organization</th>
-                <th>Source</th>
-                <th>Last Checked</th>
-              </tr>
-            </thead>
-            <tbody id="results-body"></tbody>
-          </table>
-        </div>
-      </section>
 
-      <section class="card caution">
-        <h2>Important Note</h2>
-        <p>
-          Microsoft changed federation endpoint behavior in 2025. This tool should be treated as a
-          dataset-backed lookup service, not a guaranteed live tenant-domain enumerator.
-        </p>
-      </section>
+          <section class="search-panel" aria-labelledby="search-title">
+            <div class="search-panel-head">
+              <p class="panel-kicker">Start a lookup</p>
+              <h2 id="search-title">Search the directory</h2>
+              <p id="mode-description" class="panel-copy">
+                Resolve a domain, expand sibling domains when available, and see the tenant behind
+                it.
+              </p>
+            </div>
+
+            <div class="mode-switch" role="tablist" aria-label="Search mode">
+              <button type="button" class="mode-button active" data-mode="domain" role="tab">
+                Domain
+              </button>
+              <button type="button" class="mode-button" data-mode="organization" role="tab">
+                Organization
+              </button>
+              <button type="button" class="mode-button" data-mode="tenant" role="tab">
+                Tenant ID
+              </button>
+            </div>
+
+            <form id="search-form" class="search-form">
+              <label id="search-label" class="input-label" for="search-input">Domain</label>
+              <div class="search-input-row">
+                <input
+                  id="search-input"
+                  name="q"
+                  type="text"
+                  placeholder="voltacontainerline.com"
+                  autocomplete="off"
+                  required
+                />
+                <button id="search-button" type="submit" class="primary-button">Search</button>
+              </div>
+            </form>
+
+            <div class="examples-block">
+              <div class="examples-head">
+                <span>Popular examples</span>
+                <span id="example-caption">Tap to run a domain lookup</span>
+              </div>
+              <div id="example-list" class="example-list" aria-label="Search examples"></div>
+            </div>
+
+            <div class="search-footnotes">
+              <p>Shareable search URLs are generated automatically after every successful search.</p>
+              <p>Results clearly show whether data came from the local cache, live resolution, or the upstream dataset.</p>
+            </div>
+          </section>
+        </section>
+
+        <section id="results-panel" class="results-panel">
+          <div class="results-head">
+            <div>
+              <p class="panel-kicker">Search results</p>
+              <h2 id="result-title">Ready when you are</h2>
+            </div>
+            <p id="status" class="status status-neutral">
+              Choose a search mode, run a lookup, and this page will turn into a shareable tenant
+              report.
+            </p>
+          </div>
+
+          <div class="summary-grid" aria-label="Result summary">
+            <article class="summary-card">
+              <span class="summary-label">Organization</span>
+              <strong id="summary-org" class="summary-value">-</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Tenant ID</span>
+              <strong id="summary-tenant" class="summary-value summary-mono">-</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Domains</span>
+              <strong id="summary-total" class="summary-value">0</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Source</span>
+              <strong id="summary-source" class="summary-value">Awaiting search</strong>
+            </article>
+          </div>
+
+          <div class="results-toolbar">
+            <div id="result-highlights" class="highlight-list" aria-label="Result highlights"></div>
+            <div class="action-row">
+              <button id="copy-tenant-button" type="button" class="ghost-button" disabled>
+                Copy Tenant ID
+              </button>
+              <button id="share-link-button" type="button" class="ghost-button" disabled>
+                Share Result Link
+              </button>
+              <button id="export-csv-button" type="button" class="ghost-button" disabled>
+                Export CSV
+              </button>
+              <button id="export-pdf-button" type="button" class="ghost-button" disabled>
+                Export PDF
+              </button>
+            </div>
+          </div>
+
+          <div id="result-groups" class="result-groups">
+            <article class="empty-state">
+              <h3>Built for public use</h3>
+              <p>
+                Search by domain, organization, or tenant ID. You will get a structured summary,
+                grouped domain relationships, and exportable evidence of where the data came from.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="info-grid">
+          <article id="how-it-works" class="info-card">
+            <p class="panel-kicker">How it works</p>
+            <h2>Transparent by design</h2>
+            <ol class="step-list">
+              <li>A domain lookup first checks the local tenant database for a known relationship.</li>
+              <li>If allowed, the service can resolve the tenant directly from Microsoft identity metadata.</li>
+              <li>When more sibling domains are available, upstream enrichment expands the tenant profile.</li>
+            </ol>
+          </article>
+
+          <article id="privacy" class="info-card">
+            <p class="panel-kicker">Privacy</p>
+            <h2>Clear operating mode</h2>
+            <p id="privacy-summary">
+              Privacy mode status is loaded live. When privacy mode is enabled, searches stay local
+              and external calls are blocked.
+            </p>
+            <ul class="info-list">
+              <li>No account or session is required to search.</li>
+              <li>Local-only mode can be enforced at the server level.</li>
+              <li>Every result shows what source paths were used.</li>
+            </ul>
+          </article>
+
+          <article id="api" class="info-card api-card">
+            <p class="panel-kicker">API</p>
+            <h2>Built to be automatable</h2>
+            <div class="endpoint-list">
+              <code>GET /api/lookup?q=&lt;domain-or-tenant-guid&gt;</code>
+              <code>GET /api/search/org?q=&lt;organization-name&gt;</code>
+              <code>GET /api/search/tenant-name?q=&lt;organization-name&gt;</code>
+              <code>GET /api/stats</code>
+              <code>GET /api/privacy</code>
+            </div>
+          </article>
+        </section>
+      </main>
 
       <footer class="site-footer">
         <p>
@@ -90,7 +204,7 @@
           prompted by F&amp;G.
         </p>
       </footer>
-    </main>
+    </div>
 
     <script src="/vendor/jspdf.umd.min.js"></script>
     <script src="/vendor/jspdf.plugin.autotable.min.js"></script>
