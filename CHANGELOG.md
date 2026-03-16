@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The release workflow uses semantic versioning. Each shipped feature should bump the version and add an entry here.
 
+## [1.2.2] - 2026-03-16
+
+### Added
+- Added copyright attribution and report URL to exported PDF reports.
+
 ## [1.2.1] - 2026-03-16
 
 ### Added
@@ -29,5 +34,6 @@ The release workflow uses semantic versioning. Each shipped feature should bump 
 
 ### Added
 - Initial import of the Microsoft 365 tenant domain finder application.
+
 
 

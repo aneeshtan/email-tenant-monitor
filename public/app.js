@@ -22,6 +22,7 @@ const shareLinkButton = document.getElementById('share-link-button');
 const exportCsvButton = document.getElementById('export-csv-button');
 const exportPdfButton = document.getElementById('export-pdf-button');
 const appVersionEl = document.getElementById('app-version');
+let appVersion = '?';
 
 const modeConfig = {
   domain: {
@@ -116,6 +117,14 @@ function formatDate(value) {
 
 function formatGeneratedTimestamp() {
   return new Date().toLocaleString();
+}
+
+function reportAttributionText() {
+  return `© Tenant Domain Finder (v${appVersion}) · Created by AI, prompted by F&G.`;
+}
+
+function reportUrl() {
+  return reportState.shareUrl || buildShareUrl() || window.location.href;
 }
 
 function sourceLabel(source) {
@@ -546,6 +555,11 @@ function createPdfWithJsPdf() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
   const generatedAt = formatGeneratedTimestamp();
+  const sourceUrl = reportUrl();
+  const sourceUrlLines = doc.splitTextToSize(`URL: ${sourceUrl}`, 740);
+  const attributionLines = doc.splitTextToSize(reportAttributionText(), 740);
+  const headerBaseY = reportState.tenantId ? 128 : 112;
+  const headerExtraLines = sourceUrlLines.length > 1 ? sourceUrlLines.length - 1 : 0;
 
   doc.setFontSize(18);
   doc.text('Tenant Domain Finder Report', 40, 44);
@@ -556,7 +570,8 @@ function createPdfWithJsPdf() {
   if (reportState.tenantId) {
     doc.text(`Tenant ID: ${reportState.tenantId}`, 40, 112);
   }
-  doc.text(`Total domains: ${reportState.totalDomains}`, 40, reportState.tenantId ? 128 : 112);
+  doc.text(`Total domains: ${reportState.totalDomains}`, 40, headerBaseY);
+  doc.text(sourceUrlLines, 40, headerBaseY + 16);
 
   const tableRows = reportState.rows.map((row) => [
     row.domain || '-',
@@ -569,13 +584,21 @@ function createPdfWithJsPdf() {
   doc.autoTable({
     head: [['Domain', 'Tenant ID', 'Organization', 'Source', 'Last Checked']],
     body: tableRows,
-    startY: reportState.tenantId ? 144 : 128,
+    startY: headerBaseY + 32 + headerExtraLines * 12,
     styles: {
       fontSize: 8,
       cellPadding: 4
     },
     headStyles: {
       fillColor: [13, 91, 215]
+    },
+    didDrawPage(data) {
+      const pageHeight = doc.internal.pageSize.getHeight();
+      doc.setFontSize(8);
+      doc.setTextColor(93, 103, 120);
+      doc.text(attributionLines, data.settings.margin.left, pageHeight - 22);
+      doc.text(`Page ${data.pageNumber}`, doc.internal.pageSize.getWidth() - 56, pageHeight - 22);
+      doc.setTextColor(0, 0, 0);
     }
   });
 
@@ -586,6 +609,8 @@ function createPdfWithJsPdf() {
 function createPrintableFallback() {
   const generatedAt = formatGeneratedTimestamp();
   const reportWindow = window.open('', '_blank', 'noopener,noreferrer');
+  const sourceUrl = reportUrl();
+  const attributionText = reportAttributionText();
 
   if (!reportWindow) {
     throw new Error('Pop-up blocked. Allow pop-ups and try again.');
@@ -627,6 +652,7 @@ function createPrintableFallback() {
         <p><strong>Query:</strong> ${escapeHtml(reportState.query || '-')}</p>
         <p><strong>Tenant ID:</strong> ${escapeHtml(reportState.tenantId || '-')}</p>
         <p><strong>Total domains:</strong> ${escapeHtml(String(reportState.totalDomains))}</p>
+        <p><strong>URL:</strong> ${escapeHtml(sourceUrl)}</p>
         <table>
           <thead>
             <tr>
@@ -639,6 +665,9 @@ function createPrintableFallback() {
           </thead>
           <tbody>${rowsHtml}</tbody>
         </table>
+        <p style="margin-top: 18px; color: #6b7280; font-size: 11px;">
+          ${escapeHtml(attributionText)}
+        </p>
       </body>
     </html>
   `);
@@ -777,7 +806,8 @@ exportPdfButton.addEventListener('click', exportPdfReport);
       : 'Privacy mode is off, so the service may use live Microsoft resolution and optional upstream enrichment.';
 
     if (appVersionEl) {
-      appVersionEl.textContent = `(v${meta.version || '?'})`;
+      appVersion = meta.version || '?';
+      appVersionEl.textContent = `(v${appVersion})`;
     }
   } catch (_error) {
     statsPill.textContent = 'Stats unavailable';
