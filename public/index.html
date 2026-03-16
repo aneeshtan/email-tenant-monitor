@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M365 Tenant Domain Finder</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="hero">
+        <p class="eyebrow">Microsoft 365</p>
+        <h1>Tenant Domain Finder</h1>
+        <p class="subtitle">
+          Search domains that belong to the same Azure AD / Microsoft 365 tenant.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Lookup by Domain or Tenant ID</h2>
+        <form id="lookup-form" class="form-row">
+          <input
+            id="lookup-input"
+            name="q"
+            type="text"
+            placeholder="contoso.com or tenant-guid"
+            autocomplete="off"
+            required
+          />
+          <button type="submit">Search</button>
+        </form>
+        <p class="hint">
+          In privacy mode, only local database results are returned and no external API calls are made.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Search by Organization Name</h2>
+        <form id="org-form" class="form-row">
+          <input
+            id="org-input"
+            name="q"
+            type="text"
+            placeholder="Organization name"
+            autocomplete="off"
+            required
+          />
+          <button type="submit">Search</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Results</h2>
+          <div class="card-header-actions">
+            <button id="export-pdf-button" type="button" class="secondary-button" disabled>
+              Export PDF Report
+            </button>
+            <span id="stats-pill" class="pill">Loading stats...</span>
+          </div>
+        </div>
+        <p id="status" class="status muted">Run a search to see results.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Domain</th>
+                <th>Tenant ID</th>
+                <th>Organization</th>
+                <th>Source</th>
+                <th>Last Checked</th>
+              </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card caution">
+        <h2>Important Note</h2>
+        <p>
+          Microsoft changed federation endpoint behavior in 2025. This tool should be treated as a
+          dataset-backed lookup service, not a guaranteed live tenant-domain enumerator.
+        </p>
+      </section>
+    </main>
+
+    <script src="/vendor/jspdf.umd.min.js"></script>
+    <script src="/vendor/jspdf.plugin.autotable.min.js"></script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

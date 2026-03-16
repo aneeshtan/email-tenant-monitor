@@ -1,0 +1,4 @@
+# one domain per line
+contoso.com
+microsoft.com
+adatum.com

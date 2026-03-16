@@ -1,0 +1,205 @@
+:root {
+  --bg: #f2f4ee;
+  --card: #ffffff;
+  --ink: #11231a;
+  --muted: #4a5b53;
+  --line: #d6ddd6;
+  --accent: #0f7b50;
+  --accent-2: #004f7a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    'Segoe UI',
+    'Avenir Next',
+    'Helvetica Neue',
+    Helvetica,
+    Arial,
+    sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% -10%, #dbe9d7 0, transparent 45%),
+    radial-gradient(circle at 90% -30%, #c8e0ec 0, transparent 48%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+.layout {
+  width: min(100%, 1024px);
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--accent-2);
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  margin-top: 0.6rem;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 8px 30px rgba(17, 35, 26, 0.04);
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 0.6rem;
+}
+
+input {
+  flex: 1;
+  padding: 0.72rem 0.82rem;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+input:focus {
+  outline: 2px solid #b4dcc9;
+  border-color: #8ec5ad;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 0.72rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.04);
+}
+
+.hint,
+.muted {
+  color: var(--muted);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.secondary-button {
+  background: #edf3f0;
+  color: #15432f;
+  border: 1px solid #d2dfd7;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.82rem;
+}
+
+.secondary-button:hover {
+  background: #e3eeea;
+}
+
+.secondary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.pill {
+  background: #e6f3ed;
+  color: #1e5d43;
+  border-radius: 999px;
+  padding: 0.32rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.table-wrap {
+  overflow: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 700px;
+}
+
+th,
+td {
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  padding: 0.65rem 0.45rem;
+  font-size: 0.9rem;
+}
+
+td code {
+  background: #eef3ef;
+  border: 1px solid #dde8e0;
+  border-radius: 6px;
+  padding: 0.16rem 0.4rem;
+  font-size: 0.82rem;
+}
+
+.caution {
+  border-style: dashed;
+  border-color: #dcbf8d;
+  background: #fff9ee;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .card-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .card-header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .card-header-actions button {
+    width: auto;
+  }
+}
