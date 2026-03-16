@@ -39,14 +39,14 @@ const modeConfig = {
   },
   organization: {
     label: 'Organization',
-    placeholder: 'Centurion Shipping',
+    placeholder: 'Contoso Ltd',
     description:
       'Search the local dataset by organization or brand name and inspect every matching domain.',
     exampleCaption: 'Tap to search by organization name',
     examples: [
-      'Centurion Shipping',
-      'House of Shipping',
-      'Contoso'
+      'Contoso Ltd',
+      'Fabrikam Logistics',
+      'Northwind Group'
     ]
   },
   tenant: {
